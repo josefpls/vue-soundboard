@@ -1,20 +1,13 @@
 <script setup>
+    import SoundInput from '../components/SoundInput.vue';
     import { useSoundStore } from '../stores/SoundStore';
-    const soundStore = useSoundStore();
-    const setSound = (index, sound) => {
-        const reader = new FileReader()
-        reader.onload = ($event) => {
-            soundStore.updateSound(index, $event.target.result)
-        }
-        reader.readAsDataURL(sound);
-    }
+    const soundStore = useSoundStore()
 </script>
 
 <template>
     <div class="wrapper">
         <div class="soundConfig" v-for="(sound, index) of soundStore['sounds']" v-bind:key="sound">
-            <p> {{ sound["name"] }} </p>
-            <input type="file" v-on:change="$event => setSound(index, $event.target.files[0])">
+            <SoundInput :index="index" :name="sound['name']" />
         </div>
     </div>
 </template>
